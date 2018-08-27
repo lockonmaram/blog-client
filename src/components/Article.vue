@@ -1,6 +1,10 @@
 <template>
   <div class="hello">
-    <v-flex>
+    <v-flex v-if="updateCheck === true">
+      <UpdateArticle v-bind:article="article"></UpdateArticle>
+      <v-btn @click='updateCheck = false'>Cancel</v-btn>
+    </v-flex>
+    <v-flex v-else>
       <p class="text-xs-left">{{toDate(article.created_at)}}</p>
       <v-card dark color="primary">
         <h1>{{article.title}}</h1>
@@ -10,6 +14,7 @@
         <h3>{{article.content}}</h3>
         <br><br><br>
         <v-btn v-if="check == true" @click='deleteArticle'>Delete Article</v-btn>
+        <v-btn v-if="check == true" @click='updateCheck = true'>Update Article</v-btn>
         <br><br><br>
       </v-card>
       <br><br><br><br>
@@ -40,9 +45,13 @@
 
 <script>
 import axios from 'axios'
+import UpdateArticle from './UpdateArticle.vue'
 
 export default {
   name: 'Article',
+  components: {
+    UpdateArticle
+  },
   comment: '',
   commentRules: [
     v => !!v || 'Comment is required'
@@ -51,6 +60,7 @@ export default {
     return {
       article: null,
       check: false,
+      updateCheck: false,
       id: localStorage.getItem('id')
     }
   },
@@ -68,6 +78,9 @@ export default {
       .catch(err=>{
         console.log('something went wrong!');
       })
+    },
+    updateArticle(){
+      this.emmit
     },
     addComment(){
       axios.post(`https://blogserver.lockonmaram.com/articles/${this.$route.params.articleId}/comment`,{

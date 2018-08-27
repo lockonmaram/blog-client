@@ -26,7 +26,6 @@ export default {
   name: 'home',
   data: () => ({
     articles: [],
-    // articleChild: this.$route.params.articleId
   }),
   components: {
     Welcome,
