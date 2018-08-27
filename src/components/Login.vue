@@ -55,7 +55,7 @@ export default {
           password: this.password
         })
         .then(result=>{
-          // console.log(result);
+          console.log(result);
           swal(
             'Yeay!',
             'You have logged in!',
@@ -63,6 +63,7 @@ export default {
           )
           .then(res=>{
             localStorage.setItem('token', result.data.token)
+            localStorage.setItem('id', result.data.id)
             this.$router.push({ path: '/' })
           })
         })
